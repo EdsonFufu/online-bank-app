@@ -1,0 +1,34 @@
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "firstName": "Vivian",
+  "lastName": "Vivian",
+  "phone": "0717626262",
+  "email": "vivian.edaon@gmail.com",
+  "username": "vivian",
+  "password": "12345678"
+}
+
+###
+PUT http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "id": 11,
+  "firstName": "Vivian",
+  "lastName": "Edson",
+  "phone": "0717626262",
+  "email": "vivian.edson@gmail.com",
+  "username": "vivian",
+  "password": "12345678",
+  "roles": [],
+  "accounts": []
+}
+###
+GET http://localhost:8080/user
+###
+GET http://localhost:8080/user/3
+###
+
+DELETE http://localhost:8080/user/7

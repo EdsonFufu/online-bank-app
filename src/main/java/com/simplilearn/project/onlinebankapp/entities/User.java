@@ -1,7 +1,10 @@
 package com.simplilearn.project.onlinebankapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -9,6 +12,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.TemporalType.TIMESTAMP;
 
@@ -19,6 +23,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable {
     @Id
     @Column(name = "ID")
@@ -43,23 +48,31 @@ public class User implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
-//    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-//    @JoinTable(
-//            name="user_roles",
-//            joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
-//            inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")}
-//    )
-//    private List<Roles> roles;
+    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinTable(
+            name="user_roles",
+            joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")}
+    )
+    private List<Roles> roles;
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="USER_ID")
+    private Set<Account> accounts;
 
     @CreatedDate
-    @Temporal(TIMESTAMP)
+    @Basic(optional = false)
     @Column(name = "CREATED_DATE")
-    protected Date createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date createdDate;
 
     @LastModifiedDate
-    @Temporal(TIMESTAMP)
+    @Basic(optional = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     @Column(name = "LAST_MODIFIED_DATE")
-    protected Date lastModifiedDate;
+    private Date lastModifiedDate;
 
     @SneakyThrows
     @Override
