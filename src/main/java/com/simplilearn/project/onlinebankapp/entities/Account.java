@@ -2,6 +2,8 @@ package com.simplilearn.project.onlinebankapp.entities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -30,8 +32,9 @@ public class Account implements Serializable {
     @Column(name = "ACCOUNT_NUMBER")
     private String accountNumber;
 
+    @Builder.Default
     @Column(name = "CURRENCY")
-    private String currency;
+    private String currency = "TZS";
 
     @Builder.Default
     @Column(name = "ACCOUNT_BALANCE")
@@ -42,14 +45,21 @@ public class Account implements Serializable {
     private String accountType = "savings";  // savings or currency
 
     @CreatedDate
-    @Temporal(TIMESTAMP)
+    @Basic(optional = false)
     @Column(name = "CREATED_DATE")
-    protected Date createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date createdDate;
 
     @LastModifiedDate
-    @Temporal(TIMESTAMP)
+    @Basic(optional = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     @Column(name = "LAST_MODIFIED_DATE")
-    protected Date lastModifiedDate;
+    private Date lastModifiedDate;
+
+    @Column(name = "USER_ID")
+    private String userId;
 
     @SneakyThrows
     @Override

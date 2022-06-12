@@ -2,14 +2,14 @@ package com.simplilearn.project.onlinebankapp.entities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
 @Table(name = "ROLE")
@@ -30,14 +30,18 @@ public class Roles implements Serializable {
     private String role;
 
     @CreatedDate
-    @Temporal(TIMESTAMP)
+    @Basic(optional = false)
     @Column(name = "CREATED_DATE")
-    protected Date createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date createdDate;
 
     @LastModifiedDate
-    @Temporal(TIMESTAMP)
+    @Basic(optional = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     @Column(name = "LAST_MODIFIED_DATE")
-    protected Date lastModifiedDate;
+    private Date lastModifiedDate;
 
 
     @SneakyThrows

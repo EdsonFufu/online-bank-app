@@ -1,0 +1,10 @@
+POST http://localhost:8080/roles
+Content-Type: application/json
+
+{
+  "role": "teller"
+}
+
+###
+
+GET http://localhost:8080/roles
