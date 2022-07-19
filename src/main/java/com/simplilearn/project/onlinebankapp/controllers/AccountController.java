@@ -44,4 +44,25 @@ public class AccountController {
         }
         return "Account with Id " + id + " Not found";
     }
+
+    @PostMapping("/withdraw")
+    public String withdraw(@RequestBody String payload){
+        return "";
+    }
+
+    @PostMapping("/transfer")
+    public String transfer(@RequestBody String payload){
+        return "";
+    }
+
+    @PostMapping("/deposit")
+    public String deposit(@RequestBody String payload){
+        return "";
+    }
+
+    @PostMapping("/request-cheque-book")
+    public String requestChequeBook(@RequestBody String payload){
+        return "";
+    }
+
 }

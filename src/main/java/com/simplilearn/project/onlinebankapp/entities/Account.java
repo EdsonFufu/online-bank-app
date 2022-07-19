@@ -11,8 +11,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-import static javax.persistence.TemporalType.TIMESTAMP;
-
 @Entity
 @Table(name = "ACCOUNT")
 @Getter
@@ -23,8 +21,8 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 public class Account implements Serializable {
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "ACCOUNT_NAME")
     private String accountName;
@@ -58,8 +56,9 @@ public class Account implements Serializable {
     @Column(name = "LAST_MODIFIED_DATE")
     private Date lastModifiedDate;
 
-    @Column(name = "USER_ID")
-    private String userId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "USER_ID",referencedColumnName = "ID")
+    private User user;
 
     @SneakyThrows
     @Override

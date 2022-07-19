@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import static javax.persistence.TemporalType.TIMESTAMP;
-
 @Entity
 @Table(name = "USER")
 @Getter
@@ -28,7 +26,7 @@ public class User implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @Column(name = "FIRST_NAME")
     private String firstName;
@@ -36,8 +34,8 @@ public class User implements Serializable {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Column(name = "PHONE")
-    private String phone;
+    @Column(name = "MOBILE")
+    private String mobile;
 
     @Column(name = "EMAIL")
     private String email;
@@ -48,7 +46,7 @@ public class User implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinTable(
             name="user_roles",
             joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
@@ -56,9 +54,11 @@ public class User implements Serializable {
     )
     private List<Roles> roles;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="USER_ID")
+    @OneToMany(cascade=CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
     private Set<Account> accounts;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
+    private Set<Transaction> transactions;
 
     @CreatedDate
     @Basic(optional = false)

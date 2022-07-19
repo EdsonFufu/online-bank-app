@@ -2,8 +2,8 @@ package com.simplilearn.project.onlinebankapp.entities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +22,7 @@ public class Transaction implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @Column(name = "SOURCE_ACCOUNT")
     private String sourceAccount;
@@ -39,18 +39,22 @@ public class Transaction implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "FINAL_BALANCE")
-    private String finalBalance;
+    @Column(name = "BALANCE")
+    private String balance;
 
-    @CreatedDate
+    @CreationTimestamp
     @Temporal(TIMESTAMP)
     @Column(name = "CREATED_DATE")
     protected Date createdDate;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     @Temporal(TIMESTAMP)
     @Column(name = "LAST_MODIFIED_DATE")
     protected Date lastModifiedDate;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId",referencedColumnName = "id")
+    private User user;
 
 
     @SneakyThrows
