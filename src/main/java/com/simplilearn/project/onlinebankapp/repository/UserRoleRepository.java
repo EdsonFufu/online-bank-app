@@ -1,9 +1,9 @@
 package com.simplilearn.project.onlinebankapp.repository;
 
-import com.simplilearn.project.onlinebankapp.entities.Roles;
+import com.simplilearn.project.onlinebankapp.entities.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Roles,Integer> {
+public interface UserRoleRepository extends JpaRepository<UserRole,Long> {
 }

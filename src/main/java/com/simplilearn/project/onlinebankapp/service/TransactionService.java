@@ -23,7 +23,7 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
-    public Transaction findById(int id) {
+    public Transaction findById(long id) {
         return transactionRepository.getById(id);
     }
 
@@ -31,7 +31,11 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public boolean deleteById(int id) {
+    public boolean exists(long id){
+        return transactionRepository.existsById(id);
+    }
+
+    public boolean deleteById(long id) {
         try {
             transactionRepository.deleteById(id);
             return true;

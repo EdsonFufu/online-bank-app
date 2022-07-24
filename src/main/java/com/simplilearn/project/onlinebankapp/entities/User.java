@@ -7,12 +7,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "USER")
@@ -22,7 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,25 +40,35 @@ public class User implements Serializable {
     @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "USER_NAME")
+    @Column(name = "USERNAME")
     private String username;
 
     @Column(name = "PASSWORD")
     private String password;
 
-    @OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-    @JoinTable(
-            name="user_roles",
-            joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
-            inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")}
-    )
-    private List<Roles> roles;
+    @Column(name = "ACCOUNT_NON_EXPIRED")
+    private boolean accountNonExpired;
+
+    @Column(name = "CREDENTIALS_NON_EXPIRED")
+    private boolean credentialsNonExpired;
+
+    @Column(name = "ACCOUNT_NON_LOCKED")
+    private boolean accountNonLocked;
+
+    @Column(name = "ACCOUNT_LOCKED")
+    private boolean accountLocked;
+
+    @Column(name = "ENABLED")
+    private boolean enabled;
+
+    @OneToMany(cascade=CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<UserRole> userRoles = new ArrayList<>();
 
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
-    private Set<Account> accounts;
+    private Set<Account> accounts = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
-    private Set<Transaction> transactions;
+    private Set<Transaction> transactions = new HashSet<>();
 
     @CreatedDate
     @Basic(optional = false)
@@ -78,5 +88,30 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 }

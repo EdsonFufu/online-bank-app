@@ -1,45 +1,37 @@
 package com.simplilearn.project.onlinebankapp.controllers;
 
 import com.simplilearn.project.onlinebankapp.entities.User;
-import com.simplilearn.project.onlinebankapp.repository.UserRepository;
+import com.simplilearn.project.onlinebankapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/user")
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService;
     @PostMapping
     public User create(@RequestBody User user){
-        return userRepository.save(user);
+        return userService.save(user);
     }
     @PutMapping
     public User update(@RequestBody User user){
-        return userRepository.save(user);
+        return userService.save(user);
     }
     @GetMapping("/{id}")
     public User get(@PathVariable("id") int id){
-        Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()) {
-            return optionalUser.get();
-        }
-        return null;
+        return userService.findById(id);
     }
     @GetMapping
     public List<User> index(){
-        return userRepository.findAll();
+        return userService.findAll();
     }
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") String idInString){
-        int id = Integer.parseInt(idInString);
-
-        if(userRepository.existsById(id)){
-            User user = userRepository.getById(id);
-            userRepository.delete(user);
+    public String delete(@PathVariable("id") int id){
+        if(userService.exists(id)){
+            userService.deleteById(id);
             return "User with id [" + id + "] deleted Successfully";
         }
         return "User with Id " + id + " Not found";

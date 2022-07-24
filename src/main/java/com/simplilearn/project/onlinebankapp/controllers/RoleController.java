@@ -1,7 +1,7 @@
 package com.simplilearn.project.onlinebankapp.controllers;
 
-import com.simplilearn.project.onlinebankapp.entities.Roles;
-import com.simplilearn.project.onlinebankapp.repository.RoleRepository;
+import com.simplilearn.project.onlinebankapp.entities.UserRole;
+import com.simplilearn.project.onlinebankapp.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,36 +10,30 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/roles")
+@RequestMapping(value = "/user-role")
 public class RoleController {
-    private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
     @PostMapping
-    public Roles create(@RequestBody Roles roles){
-        return roleRepository.save(roles);
+    public UserRole create(@RequestBody UserRole userRole){
+        return userRoleRepository.save(userRole);
     }
     @PutMapping
-    public Roles update(@RequestBody Roles roles){
-        return roleRepository.save(roles);
+    public UserRole update(@RequestBody UserRole userRole){
+        return userRoleRepository.save(userRole);
     }
     @GetMapping("/{id}")
-    public Roles get(@PathVariable("id") int id){
-        Optional<Roles> optionalRoles = roleRepository.findById(id);
-        if(optionalRoles.isPresent()) {
-            return optionalRoles.get();
-        }
-        return null;
+    public UserRole get(@PathVariable("id") long id){
+        return userRoleRepository.getById(id);
     }
     @GetMapping
-    public List<Roles> index(){
-        return roleRepository.findAll();
+    public List<UserRole> index(){
+        return userRoleRepository.findAll();
     }
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") String idInString){
-        int id = Integer.parseInt(idInString);
-
-        if(roleRepository.existsById(id)){
-            Roles roles = roleRepository.getById(id);
-            roleRepository.delete(roles);
+    public String delete(@PathVariable("id") long id){
+        if(userRoleRepository.existsById(id)){
+            UserRole roles = userRoleRepository.getById(id);
+            userRoleRepository.delete(roles);
             return "Roles with id [" + id + "] deleted Successfully";
         }
         return "Roles with Id " + id + " Not found";

@@ -22,7 +22,7 @@ public class AccountController {
         return accountRepository.save(account);
     }
     @GetMapping("/{id}")
-    public Account get(@PathVariable("id") int id){
+    public Account get(@PathVariable("id") long id){
         Optional<Account> optionalAccount = accountRepository.findById(id);
         if(optionalAccount.isPresent()) {
             return optionalAccount.get();
@@ -34,8 +34,7 @@ public class AccountController {
         return accountRepository.findAll();
     }
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") String idInString){
-        int id = Integer.parseInt(idInString);
+    public String delete(@PathVariable("id") long id){
 
         if(accountRepository.existsById(id)){
             Account account = accountRepository.getById(id);

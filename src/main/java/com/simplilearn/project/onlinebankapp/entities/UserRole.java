@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRoles {
+public class UserRole {
 
     @Id
     @Column(name = "ID")
@@ -39,4 +39,8 @@ public class UserRoles {
     @UpdateTimestamp
     @Column(name = "LAST_MODIFIED_DATE")
     private Date lastModifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }
