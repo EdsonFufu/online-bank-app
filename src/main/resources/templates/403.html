@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/main-login}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ICIN BANK:::Error</title>
+</head>
+
+<body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+
+        <div class="container" layout:fragment="content">
+
+            <div class="d-flex align-items-center justify-content-center vh-100">
+                <div class="text-center">
+                    <h1 class="display-1 fw-bold" th:text="${httpStatus.value()}">404</h1>
+                    <p class="fs-3"> <span class="text-danger">Opps!</span> <span th:text="${httpStatus.name()}">Page not found.</span></p>
+                    <p class="lead" th:utext="${httpStatus.reasonPhrase}">
+                        The page you’re looking for doesn’t exist.
+                    </p>
+                    <a class="btn-outline-primary"  th:href="@{/}">Go Home</a>
+                </div>
+            </div>
+
+
+        </div>
+</body>
+</html>
+

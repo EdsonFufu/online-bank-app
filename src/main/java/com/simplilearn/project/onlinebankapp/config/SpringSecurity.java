@@ -28,10 +28,10 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     public final PasswordEncoder passwordEncoder;
 
-//    @Override
-//    public void configure(WebSecurity web) {
-//        web.ignoring().antMatchers("/resources/**", "/static/**","/webjars/**","/css/**","/js/**","/images/**","/error");
-//    }
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/resources/**", "/static/**","/webjars/**","/css/**","/js/**","/images/**","/error","/webfonts/**","/webfonts");
+    }
 
     @Autowired
     @Lazy
@@ -45,7 +45,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {  // (2)
         http
                 .authorizeRequests()
-                .antMatchers("/signup","/login","/resources/**", "/static/**","/webjars/**","/css/**","/js/**","/images/**","/error").permitAll()
+                //.antMatchers("/signup","/login","/resources/**", "/static/**","/webjars/**","/css/**","/js/**","/images/**","/error").permitAll()
                 .antMatchers("/user-role","/user-role/**","/user","/user/**","/setting","/setting/**").hasRole("ADMIN")
                 .antMatchers("/","/transaction","/transaction/**","/account","/account/**","/deposit","/balance").hasAnyRole("TELLER","ADMIN")
                 .anyRequest().authenticated()
