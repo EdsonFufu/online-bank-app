@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html
+        xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/main}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Accounts</title>
+</head>
+
+<body>
+<div class="page-wrapper" layout:fragment="content">
+    <div class="container mt-5">
+        <div class="card flex-fill">
+            <div class="card-header">
+
+                <h5 class="card-title mb-0 float-left pull-left">Accounts</h5>
+                <div class="h3 pull-right float-lg-right"><a th:href="@{/account/create}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></div>
+
+            </div>
+            <table class="table table-hover my-0">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>AccountName</th>
+                    <th>AccountNumber</th>
+                    <th>AccountType</th>
+                    <th>Currency</th>
+                    <th>Status</th>
+                    <th class="d-none d-xl-table-cell">Created Date</th>
+                    <th class="d-none d-xl-table-cell">Modified Date</th>
+
+                    <th class="d-none d-md-table-cell">Action</th>
+                </tr>
+                </thead>
+                <tbody th:if="${accounts.page.totalPages > 0}">
+                <tr th:each="account:${accounts.page}">
+                    <td th:text="${accountStat.index + 1}">1</td>
+                    <td th:text="${account.getAccountName()}">AccountName</td>
+                    <td th:text="${account.getAccountNumber()}">AccountNumber</td>
+                    <td th:text="${account.getAccountType()}">AccountType</td>
+                    <td th:text="${account.getCurrency()}">Currency</td>
+                    <td>
+                        <div th:if="${user.isStatus()}">
+                            <span class="badge bg-success rounded-pill d-inline"><i class="fa fa-lock-open"></i> </span>
+                        </div>
+                        <div th:unless="${user.isStatus()}">
+                            <span class="badge bg-warning rounded-pill d-inline"><i class="fa fa-lock"></i> </span>
+                        </div>
+                    </td>
+                    <td class="d-none d-xl-table-cell" th:text="${account.getCreatedDate()}" >01/01/2021</td>
+                    <td class="d-none d-xl-table-cell" th:text="${account.getLastModifiedDate()}">31/06/2021</td>
+                    <td class="d-none d-md-table-cell">
+                        <a th:href="@{'/account/view/' + ${account.getId()}}"><i class="fa fa-eye info"></i></a>
+                        <a th:href="@{'/account/delete/' + ${account.getId()}}"><i class="fa fa-trash warning"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody th:unless="${accounts.page.totalPages > 0}">
+                    <tr>
+                        <td colspan="9">No Data Available</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="9">
+
+                        <ul th:style="${'list-style-type:none'}" class="page" th:if="${accounts.page.totalPages > 1}">
+                            <li class="page-item" th:classappend="${!accounts.paging.isPrevEnabled()? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{'/account/?pageNumber=' + ${accounts.paging.pageNumber - 1}}"
+                                   tabindex="-1"> <span aria-hidden="true">«</span></a>
+                            </li>
+                            <th:block th:each="item : ${accounts.paging.getItems()}">
+                                <li class="page-item" th:classappend="${item.index == accounts.paging.pageNumber? 'active' : ''}"
+                                    th:if="${item.pageItemType.name() == 'PAGE'}">
+                                    <a class="page-link" th:href="@{'/account/?pageNumber=' + ${item.index}}"
+                                       th:text="${item.index}"></a>
+                                </li>
+                                <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                                    <a class="page-link" href="#">...</a>
+                                </li>
+                            </th:block>
+                            <li class="page-item" th:classappend="${!accounts.paging.isNextEnabled()? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{'/account/?pageNumber=' + ${accounts.paging.pageNumber + 1}}"><span aria-hidden="true">»</span></a>
+                            </li>
+
+                        </ul>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

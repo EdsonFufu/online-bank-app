@@ -35,10 +35,13 @@ public class UserRoleService {
 
     public boolean deleteById(long id) {
         try {
-            userRoleRepository.deleteById(id);
-            return true;
+            if (userRoleRepository.existsById(id)) {
+                UserRole roles = userRoleRepository.getById(id);
+                userRoleRepository.delete(roles);
+                return true;
+            }
+            return false;
         }catch (Exception e){
-            log.error(e.getMessage());
             return false;
         }
     }

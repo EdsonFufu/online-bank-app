@@ -108,17 +108,10 @@ public class LoginController {
                     .password(passwordEncoder.encode(userDTO.getPassword()))
                     .mobile(userDTO.getMobile())
                     .email(userDTO.getEmail())
-                    .enabled(true)
-                    .credentialsNonExpired(true)
-                    .accountLocked(false)
-                    .accountNonExpired(true)
-                    .accountNonLocked(true)
                     .build();
 
             user.setUserRoles(new ArrayList<>(){{
                 add(UserRole.builder().role(ROLE.ROLE_ADMIN.name()).build());
-                add(UserRole.builder().role(ROLE.ROLE_TELLER.name()).build());
-
             }});
 
 

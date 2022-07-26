@@ -10,13 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    @GetMapping({"/","/welcome","/home"})
-    public ModelAndView index(ModelAndView modelAndView){
+    @GetMapping(value = {"/","/welcome","/home"})
+    public ModelAndView index(){
+        ModelAndView modelAndView = new ModelAndView("index");
         AuthUtils.isAuthenticated(SecurityContextHolder.getContext().getAuthentication(), modelAndView);
         if(modelAndView.getModel().containsKey("error")){
             return modelAndView;
         }
-        modelAndView.setViewName("index");
         modelAndView.addObject("title","Home");
         return modelAndView;
     }

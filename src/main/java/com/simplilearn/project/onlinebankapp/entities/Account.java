@@ -42,6 +42,10 @@ public class Account implements Serializable {
     @Column(name = "ACCOUNT_TYPE")
     private String accountType = "savings";  // savings or currency
 
+    @Builder.Default
+    @Column(name = "ACCOUNT_STATUS")
+    private boolean status = true;
+
     @CreatedDate
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")

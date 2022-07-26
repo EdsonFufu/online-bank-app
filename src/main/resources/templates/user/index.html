@@ -47,28 +47,28 @@
                         <p class="text-muted mb-0">Customer</p>
                     </td>
                     <td>
+                        <div th:if="${!user.isAccountLocked()}">
+                            <span class="badge bg-success rounded-pill d-inline"><i class="fa fa-lock-open"></i> </span>
+                        </div>
+                        <div th:unless="${!user.isAccountLocked()}">
+                            <span class="badge bg-warning rounded-pill d-inline"><i class="fa fa-lock"></i> </span>
+                        </div>
+                    </td>
+                    <td>
                         <div th:if="${user.isEnabled()}">
-                            <span class="badge badge-success rounded-pill d-inline">Active</span>
+                            <span class="badge bg-success rounded-pill d-inline"><i class="fa fa-check"></i></span>
                         </div>
                         <div th:unless="${user.isEnabled()}">
-                            <span class="badge badge-warning rounded-pill d-inline">InActive</span>
+                            <span class="badge bg-warning rounded-pill d-inline"><i class="fa fa-times"></i></span>
                         </div>
                     </td>
                     <td>
-                        <div th:if="${user.isAccountNonLocked()}">
-                            <span class="badge badge-success rounded-pill d-inline"><i class="fa fa-lock-open"></i></span>
-                        </div>
-                        <div th:unless="${user.isAccountNonLocked()}">
-                            <span class="badge badge-warning rounded-pill d-inline"><i class="fa fa-lock"></i></span>
-                        </div>
-                    </td>
-                    <td>
-                        <a th:href="@{'/user/view/' + ${user.getId()}}"><i class="fa fa-eye info"></i></a>
-                        <a th:href="@{'/user/delete' + ${user.getId()}}"><i class="fa fa-trash warning"></i></a>
+                        <a th:href="@{'/user/view/' + ${user.getId()}}"><i class="fa fa-eye"></i></a>
+                        <a th:href="@{'/user/delete' + ${user.getId()}}"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
-                <tr th:unless="${images.paging.getItems()}">
-                    <td colspan="2"> No Data Available </td>
+                <tr th:unless="${users.paging.getItems()}">
+                    <td colspan="5"> No Data Available </td>
                 </tr>
                 </tbody>
                 <tfoot>

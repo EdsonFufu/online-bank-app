@@ -17,6 +17,6 @@ public class IcinOnlineBankAppApplication {
     @Bean
     @Lazy
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(10);
     }
 }

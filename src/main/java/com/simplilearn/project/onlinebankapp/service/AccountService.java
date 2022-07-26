@@ -17,13 +17,13 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class AccountService {
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     public Account save(Account account){
         return accountRepository.save(account);
     }
     public Account findById(long id) {
-        return accountRepository.getById(id);
+        return accountRepository.getReferenceById(id);
     }
 
     public List<Account> findAll(){

@@ -6,92 +6,71 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Users</title>
+    <title>UserRoles</title>
 </head>
 
 <body>
 <div class="page-wrapper" layout:fragment="content">
-    <div class="container rounded mt-5 bg-white p-md-5">
-        <div class="h3 font-weight-bold float-left">Users</div>
-        <div class="h3 pull-right float-lg-right"><a th:href="@{/signup}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></div>
-        <div class=" table table-hover my-0 table-responsive">
-            <table class="table align-middle mb-0 bg-white border">
-                <thead class="bg-light">
+    <div class="container mt-5">
+        <div class="card flex-fill">
+            <div class="card-header">
 
+                <h5 class="card-title mb-0 float-left pull-left">User Roles</h5>
+                <div class="h3 pull-right float-lg-right"><a th:href="@{/user-role/create}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></div>
+
+            </div>
+            <table class="table table-hover my-0">
+                <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Locked?</th>
-                    <th scope="col">Enabled?</th>
-                    <th scope="col">Action</th>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>User</th>
+                    <th class="d-none d-xl-table-cell">Start Date</th>
+                    <th class="d-none d-xl-table-cell">End Date</th>
+                    <th>Status</th>
+                    <th class="d-none d-md-table-cell">Action</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="user : ${users.page}">
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <img
-                                    th:src="@{/images/account-icon1.png}"
-                                    alt=""
-                                    style="width: 30px; height: 30px"
-                                    class="rounded-circle"
-                            />
-                            <div class="ms-3">
-                                <p class="fw-bold mb-1" th:text="${user.getFirstName() + ' ' + user.getLastName()}">John Doe</p>
-                                <p class="text-muted mb-0" th:text="${user.getEmail()}">john.doe@gmail.com</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <p class="fw-normal mb-1" th:text="${user.getUsername()}">Software engineer</p>
-                        <p class="text-muted mb-0">Customer</p>
-                    </td>
-                    <td>
-                        <div th:if="${user.isEnabled()}">
-                            <span class="badge badge-success rounded-pill d-inline">Active</span>
-                        </div>
-                        <div th:unless="${user.isEnabled()}">
-                            <span class="badge badge-warning rounded-pill d-inline">InActive</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div th:if="${user.isAccountNonLocked()}">
-                            <span class="badge badge-success rounded-pill d-inline"><i class="fa fa-lock-open"></i></span>
-                        </div>
-                        <div th:unless="${user.isAccountNonLocked()}">
-                            <span class="badge badge-warning rounded-pill d-inline"><i class="fa fa-lock"></i></span>
-                        </div>
-                    </td>
-                    <td>
-                        <a th:href="@{'/user/view/' + ${user.getId()}}"><i class="fa fa-eye info"></i></a>
-                        <a th:href="@{'/user/delete' + ${user.getId()}}"><i class="fa fa-trash warning"></i></a>
+                <tbody th:if="${userRoles.page.totalPages > 0}">
+                <tr th:each="userRole:${userRoles.page}">
+                    <td th:text="${userRoleStat.index + 1}">1</td>
+                    <td th:text="${userRole.getRole()}">Project Apollo</td>
+                    <td><span th:if="${userRole.getUser()}" th:text="${userRole.getUser().getUsername()}"></span></td>
+                    <td class="d-none d-xl-table-cell" th:text="${userRole.getCreatedDate()}" >01/01/2021</td>
+                    <td class="d-none d-xl-table-cell" th:text="${userRole.getLastModifiedDate()}">31/06/2021</td>
+                    <td><span class="badge bg-success">Active</span></td>
+                    <td class="d-none d-md-table-cell">
+                        <a th:href="@{'/user-role/view/' + ${userRole.getId()}}"><i class="fa fa-eye info"></i></a>
+                        <a th:href="@{'/user-role/delete/' + ${userRole.getId()}}"><i class="fa fa-trash warning"></i></a>
                     </td>
                 </tr>
-                <tr th:unless="${images.paging.getItems()}">
-                    <td colspan="2"> No Data Available </td>
-                </tr>
+                </tbody>
+                <tbody th:unless="${userRoles.page.totalPages > 0}">
+                    <tr>
+                        <td colspan="5">No Data Available</td>
+                    </tr>
                 </tbody>
                 <tfoot>
                 <tr>
                     <td colspan="5">
 
-                        <ul th:style="${'list-style-type:none'}" class="page" th:if="${users.page.totalPages > 1}">
-                            <li class="page-item" th:classappend="${!users.paging.isPrevEnabled()? 'disabled' : ''}">
-                                <a class="page-link" th:href="@{'/user/?pageNumber=' + ${users.paging.pageNumber - 1}}"
+                        <ul th:style="${'list-style-type:none'}" class="page" th:if="${userRoles.page.totalPages > 1}">
+                            <li class="page-item" th:classappend="${!userRoles.paging.isPrevEnabled()? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{'/user-role/?pageNumber=' + ${userRoles.paging.pageNumber - 1}}"
                                    tabindex="-1"> <span aria-hidden="true">«</span></a>
                             </li>
-                            <th:block th:each="item : ${users.paging.getItems()}">
-                                <li class="page-item" th:classappend="${item.index == users.paging.pageNumber? 'active' : ''}"
+                            <th:block th:each="item : ${userRoles.paging.getItems()}">
+                                <li class="page-item" th:classappend="${item.index == userRoles.paging.pageNumber? 'active' : ''}"
                                     th:if="${item.pageItemType.name() == 'PAGE'}">
-                                    <a class="page-link" th:href="@{'/user/?pageNumber=' + ${item.index}}"
+                                    <a class="page-link" th:href="@{'/user-role/?pageNumber=' + ${item.index}}"
                                        th:text="${item.index}"></a>
                                 </li>
                                 <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
                                     <a class="page-link" href="#">...</a>
                                 </li>
                             </th:block>
-                            <li class="page-item" th:classappend="${!users.paging.isNextEnabled()? 'disabled' : ''}">
-                                <a class="page-link" th:href="@{'/user/?pageNumber=' + ${users.paging.pageNumber + 1}}"><span aria-hidden="true">»</span></a>
+                            <li class="page-item" th:classappend="${!userRoles.paging.isNextEnabled()? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{'/user-role/?pageNumber=' + ${userRoles.paging.pageNumber + 1}}"><span aria-hidden="true">»</span></a>
                             </li>
 
                         </ul>
@@ -99,10 +78,10 @@
                 </tr>
                 </tfoot>
             </table>
-
         </div>
-
     </div>
+
+
 </div>
 
 </body>

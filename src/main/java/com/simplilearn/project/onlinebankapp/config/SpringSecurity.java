@@ -6,8 +6,10 @@ import com.simplilearn.project.onlinebankapp.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -15,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpSession;
@@ -28,9 +31,22 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     public final PasswordEncoder passwordEncoder;
 
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
+
+
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/resources/**", "/static/**","/webjars/**","/css/**","/js/**","/images/**","/error","/webfonts/**","/webfonts");
+        web.ignoring().antMatchers("/resources/**", "/static/**","/webjars/**","/css/**","/js/**","/images/**","/error","/webfonts/**","/webfonts","/signup");
+    }
+
+    @Override
+    @Bean
+    @Lazy
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Autowired
@@ -46,8 +62,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 //.antMatchers("/signup","/login","/resources/**", "/static/**","/webjars/**","/css/**","/js/**","/images/**","/error").permitAll()
-                .antMatchers("/user-role","/user-role/**","/user","/user/**","/setting","/setting/**").hasRole("ADMIN")
-                .antMatchers("/","/transaction","/transaction/**","/account","/account/**","/deposit","/balance").hasAnyRole("TELLER","ADMIN")
+                .antMatchers("/user-role","/user-role/**","/user","/user/**","/setting","/setting/**","/","/transaction","/transaction/**","/account","/account/**","/deposit","/balance").hasAnyRole("TELLER","ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(form -> form
@@ -57,9 +72,9 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                             String username = userDetails.getUsername();
 
-                            System.out.println("The user " + username + " has logged in.");
+                            log.info("The user " + username + " has logged in.");
 
-                            response.sendRedirect(request.getContextPath());
+                            response.sendRedirect(request.getContextPath() + "/welcome");
                         })
                         .failureHandler((request, response, exception) -> {
                             exception.printStackTrace();

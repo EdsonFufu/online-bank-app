@@ -1,12 +1,12 @@
 <!-- footer -->
 <!-- ============================================================== -->
 
-<footer class="footer" th:replace="~{fragments/footer :: footer}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<footer class="footer mb-0 mt-7" layout:fragment="footer" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <div class="container-fluid">
         <div class="row text-muted">
             <div class="col-6 text-start">
                 <p class="mb-0">
-                    <a class="text-muted" th:href="@{/}" target="_blank">Copyright &copy; <strong><script>document.write(new Date().getFullYear());</script> ICIN</strong></a>
+                    <a class="text-muted" th:href="@{/}" target="_blank">Copyright &copy; <strong><script>document.write(new Date().getFullYear());</script> ICIN Online Banking</strong></a>
                 </p>
             </div>
             <div class="col-6 text-end">

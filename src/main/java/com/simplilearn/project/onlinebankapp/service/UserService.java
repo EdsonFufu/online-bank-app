@@ -16,7 +16,6 @@ import java.util.List;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class UserService {
     @Autowired private UserRepository userRepository;
 
