@@ -1,5 +1,6 @@
 package com.simplilearn.project.onlinebankapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -52,6 +53,7 @@ public class Transaction implements Serializable {
     @Column(name = "LAST_MODIFIED_DATE")
     protected Date lastModifiedDate;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId",referencedColumnName = "id")
     private User user;

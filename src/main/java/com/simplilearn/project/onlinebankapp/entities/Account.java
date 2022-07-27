@@ -1,5 +1,6 @@
 package com.simplilearn.project.onlinebankapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -42,27 +43,29 @@ public class Account implements Serializable {
     @Column(name = "ACCOUNT_TYPE")
     private String accountType = "savings";  // savings or currency
 
-    @Builder.Default
     @Column(name = "ACCOUNT_STATUS")
     private boolean status = true;
 
     @CreatedDate
-    @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date createdDate;
 
     @LastModifiedDate
-    @Basic(optional = false)
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     @Column(name = "LAST_MODIFIED_DATE")
     private Date lastModifiedDate;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID",referencedColumnName = "ID")
     private User user;
+
+    public String getFormatedBalance(){
+        return String.format("TZS %,.2f",balance);
+    }
 
     @SneakyThrows
     @Override

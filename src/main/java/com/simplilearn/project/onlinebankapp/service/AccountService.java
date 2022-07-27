@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Slf4j
@@ -43,5 +44,16 @@ public class AccountService {
         PageRequest request = PageRequest.of(pageNumber - 1, size, Sort.by(Sort.Direction.ASC, "id"));
         Page<Account> accountPage = accountRepository.findAll(request);
         return new Paged<>(accountPage, Paging.of(accountPage.getTotalPages(), pageNumber, size));
+    }
+
+    public String getAccountNumber(){
+        Random rand = new Random();
+        StringBuilder stringBuilder = new StringBuilder("1100");
+        for (int i = 0; i < 14; i++)
+        {
+            int n = rand.nextInt(6);
+            stringBuilder.append(n);
+        }
+       return stringBuilder.toString();
     }
 }

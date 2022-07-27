@@ -1,6 +1,7 @@
 package com.simplilearn.project.onlinebankapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -39,6 +40,9 @@ public class User implements Serializable, UserDetails {
     @Column(name = "MOBILE")
     private String mobile;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "EMAIL")
     private String email;
 
@@ -68,14 +72,17 @@ public class User implements Serializable, UserDetails {
     @Column(name = "ENABLED")
     private boolean enabled = true;
 
+    @JsonManagedReference
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.EAGER)
     private List<UserRole> userRoles = new ArrayList<>();
 
-//    @OneToMany(cascade=CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
-//    private List<Account> accounts = new ArrayList<>();
-//
-//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
-//    private List<Transaction> transactions = new ArrayList<>();
+    @JsonManagedReference
+    @OneToMany(cascade=CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<Account> accounts = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<Transaction> transactions = new ArrayList<>();
 
     @CreatedDate
     @Basic(optional = false)

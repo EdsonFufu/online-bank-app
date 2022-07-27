@@ -16,7 +16,8 @@
             <div class="card-header">
 
                 <h5 class="card-title mb-0 float-left pull-left">Accounts</h5>
-                <div class="h3 pull-right float-lg-right"><a th:href="@{/account/create}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></div>
+                <div class="h3 pull-right text-lg-start"><a th:href="@{/account/deposit}"><button class="btn btn-outline-info"><i class="fa fa-plus-square"></i> Deposit</button></a></div>
+                <div class="h3 pull-right text-lg-end"><a th:href="@{/account/create}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></div>
 
             </div>
             <table class="table table-hover my-0">
@@ -25,7 +26,7 @@
                     <th>#</th>
                     <th>AccountName</th>
                     <th>AccountNumber</th>
-                    <th>AccountType</th>
+                    <th>Balance</th>
                     <th>Currency</th>
                     <th>Status</th>
                     <th class="d-none d-xl-table-cell">Created Date</th>
@@ -39,21 +40,22 @@
                     <td th:text="${accountStat.index + 1}">1</td>
                     <td th:text="${account.getAccountName()}">AccountName</td>
                     <td th:text="${account.getAccountNumber()}">AccountNumber</td>
-                    <td th:text="${account.getAccountType()}">AccountType</td>
+                    <td th:text="${account.getFormatedBalance()}">Balance</td>
                     <td th:text="${account.getCurrency()}">Currency</td>
                     <td>
-                        <div th:if="${user.isStatus()}">
+                        <div th:if="${!account.isStatus()}">
                             <span class="badge bg-success rounded-pill d-inline"><i class="fa fa-lock-open"></i> </span>
                         </div>
-                        <div th:unless="${user.isStatus()}">
+                        <div th:unless="${!account.isStatus()}">
                             <span class="badge bg-warning rounded-pill d-inline"><i class="fa fa-lock"></i> </span>
                         </div>
                     </td>
                     <td class="d-none d-xl-table-cell" th:text="${account.getCreatedDate()}" >01/01/2021</td>
                     <td class="d-none d-xl-table-cell" th:text="${account.getLastModifiedDate()}">31/06/2021</td>
-                    <td class="d-none d-md-table-cell">
-                        <a th:href="@{'/account/view/' + ${account.getId()}}"><i class="fa fa-eye info"></i></a>
-                        <a th:href="@{'/account/delete/' + ${account.getId()}}"><i class="fa fa-trash warning"></i></a>
+                    <td class="table-action">
+                        <a th:href="@{'/account/view/' + ${account.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye align-middle me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                        <a th:href="@{'/account/edit/' + ${account.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle me-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+<!--                        <a th:href="@{'/account/delete/' + ${user.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>                    -->
                     </td>
                 </tr>
                 </tbody>
@@ -65,8 +67,10 @@
                 <tfoot>
                 <tr>
                     <td colspan="9">
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatables-reponsive_paginate" th:if="${accounts.page.totalPages > 1}">
 
-                        <ul th:style="${'list-style-type:none'}" class="page" th:if="${accounts.page.totalPages > 1}">
+
+                        <ul  th:style="${'list-style-type:none'}" class="pagination" th:if="${accounts.page.totalPages > 1}">
                             <li class="page-item" th:classappend="${!accounts.paging.isPrevEnabled()? 'disabled' : ''}">
                                 <a class="page-link" th:href="@{'/account/?pageNumber=' + ${accounts.paging.pageNumber - 1}}"
                                    tabindex="-1"> <span aria-hidden="true">«</span></a>
@@ -86,6 +90,7 @@
                             </li>
 
                         </ul>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>

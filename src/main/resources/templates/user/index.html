@@ -11,9 +11,9 @@
 
 <body>
 <div class="page-wrapper" layout:fragment="content">
-    <div class="container rounded mt-5 bg-white p-md-5">
-        <div class="h3 font-weight-bold float-left">Users</div>
-        <div class="h3 pull-right float-lg-right"><a th:href="@{/signup}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></div>
+    <div class="container rounded mt-5 bg-white p-md-5 mb-5">
+        <div class="h3 font-weight-bold text-lg-start">Users/Customers</div>
+        <div class="h3 pull-right text-lg-end"><a th:href="@{/signup}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></div>
         <div class=" table table-hover my-0 table-responsive">
             <table class="table align-middle mb-0 bg-white border">
                 <thead class="bg-light">
@@ -62,9 +62,10 @@
                             <span class="badge bg-warning rounded-pill d-inline"><i class="fa fa-times"></i></span>
                         </div>
                     </td>
-                    <td>
-                        <a th:href="@{'/user/view/' + ${user.getId()}}"><i class="fa fa-eye"></i></a>
-                        <a th:href="@{'/user/delete' + ${user.getId()}}"><i class="fa fa-trash"></i></a>
+                    <td class="table-action">
+                        <a th:href="@{'/user/view/' + ${user.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye align-middle me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                        <a th:href="@{'/user/edit/' + ${user.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle me-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                        <a th:href="@{'/user/delete/' + ${user.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
                     </td>
                 </tr>
                 <tr th:unless="${users.paging.getItems()}">
@@ -74,31 +75,33 @@
                 <tfoot>
                 <tr>
                     <td colspan="5">
-
-                        <ul th:style="${'list-style-type:none'}" class="page" th:if="${users.page.totalPages > 1}">
-                            <li class="page-item" th:classappend="${!users.paging.isPrevEnabled()? 'disabled' : ''}">
-                                <a class="page-link" th:href="@{'/user/?pageNumber=' + ${users.paging.pageNumber - 1}}"
-                                   tabindex="-1"> <span aria-hidden="true">«</span></a>
-                            </li>
-                            <th:block th:each="item : ${users.paging.getItems()}">
-                                <li class="page-item" th:classappend="${item.index == users.paging.pageNumber? 'active' : ''}"
-                                    th:if="${item.pageItemType.name() == 'PAGE'}">
-                                    <a class="page-link" th:href="@{'/user/?pageNumber=' + ${item.index}}"
-                                       th:text="${item.index}"></a>
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatables-reponsive_paginate" th:if="${users.page.totalPages > 1}">
+                            <ul class="pagination" th:style="${'list-style-type:none'}"  >
+                                <li class="paginate_button page-item previous" id="datatables-reponsive_previous" th:classappend="${!users.paging.isPrevEnabled()? 'disabled' : ''}">
+                                    <a aria-controls="datatables-reponsive" class="page-link" th:href="@{'/user/?pageNumber=' + ${users.paging.pageNumber - 1}}"
+                                       tabindex="-1"> <span aria-hidden="true">«</span></a>
                                 </li>
-                                <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
-                                    <a class="page-link" href="#">...</a>
+                                <th:block th:each="item : ${users.paging.getItems()}">
+                                    <li class="paginate_button page-item" th:classappend="${item.index == users.paging.pageNumber? 'active' : ''}"
+                                        th:if="${item.pageItemType.name() == 'PAGE'}">
+                                        <a aria-controls="datatables-reponsive" class="page-link" th:href="@{'/user/?pageNumber=' + ${item.index}}"
+                                           th:text="${item.index}"></a>
+                                    </li>
+                                    <li class="paginate_button page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                                        <a aria-controls="datatables-reponsive" class="page-link" href="#">...</a>
+                                    </li>
+                                </th:block>
+                                <li class="paginate_button page-item next" th:classappend="${!users.paging.isNextEnabled()? 'disabled' : ''}">
+                                    <a aria-controls="datatables-reponsive" class="page-link" th:href="@{'/user/?pageNumber=' + ${users.paging.pageNumber + 1}}"><span aria-hidden="true">»</span></a>
                                 </li>
-                            </th:block>
-                            <li class="page-item" th:classappend="${!users.paging.isNextEnabled()? 'disabled' : ''}">
-                                <a class="page-link" th:href="@{'/user/?pageNumber=' + ${users.paging.pageNumber + 1}}"><span aria-hidden="true">»</span></a>
-                            </li>
 
-                        </ul>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>
             </table>
+
 
         </div>
 

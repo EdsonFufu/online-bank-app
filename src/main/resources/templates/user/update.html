@@ -14,12 +14,12 @@
 
     <div class="card m-4">
         <div class="card-header">
-            <h5 class="card-title">Create</h5>
-            <h6 class="card-subtitle text-muted">Customer/User</h6>
+            <h5 class="card-title">Update</h5>
+            <h6 class="card-subtitle text-muted">Customer</h6>
         </div>
         <div class="card-body">
             <div class="m-sm-4">
-                <form method="post" th:object="${user}">
+                <form method="post" th:object="${user}" th:action="@{/user/update}">
                     <div class="row">
                         <div class="col-md-6 px-2">
                             <label class="form-label">First Name</label>
@@ -33,11 +33,11 @@
                     <div class="row">
                         <div class="col-md-6 px-2">
                             <label class="form-label">Username</label>
-                            <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your Username" th:field="*{username}" />
+                            <input class="form-control form-control-lg" type="text" readonly name="username" placeholder="Enter your Username" th:field="*{username}" />
                         </div>
                         <div class="col-md-6 px-2">
-                            <label class="form-label">Password</label>
-                            <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your Password" th:field="*{password}" />
+                            <label class="form-label">Address</label>
+                            <input class="form-control form-control-lg" type="text" name="address" placeholder="Enter your Address" th:field="*{address}" />
                         </div>
                     </div>
                     <div class="row">
@@ -50,8 +50,15 @@
                             <input class="form-control form-control-lg" type="text" name="mobile" placeholder="Enter your Mobile" th:field="*{mobile}" />
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12 px-2">
+                            <input class="form-control form-control-lg" type="text" name="id" placeholder="ID" th:field="*{id}" />
+                            <input class="form-control form-control-lg" type="text" name="password" placeholder="ID" th:field="*{password}" />
+
+                        </div>
+                    </div>
                     <div class="text-lg-start mt-3">
-                        <button type="submit" class="btn btn-lg btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button>
+                        <button type="submit" class="btn btn-lg btn-outline-primary"><i class="fa fa-edit"></i> Update</button>
                     </div>
                 </form>
             </div>

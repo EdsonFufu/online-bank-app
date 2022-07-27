@@ -16,14 +16,14 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" th:href="@{/profile}">
+                <a class="sidebar-link" th:href="@{/user/profile}">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
                 </a>
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" th:href="@{/user}">
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Users/Customers</span>
+                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users/Customers</span>
                 </a>
             </li>
 
@@ -52,6 +52,11 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" th:href="@{/checkbook-request}">
                     <i class="align-middle" data-feather="grid"></i> <span class="align-middle">CheckBook Requests</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" th:href="@{/logout}">
+                <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Logout</span>
                 </a>
             </li>
         </ul>

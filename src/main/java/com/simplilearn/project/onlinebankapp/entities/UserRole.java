@@ -1,5 +1,6 @@
 package com.simplilearn.project.onlinebankapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -40,6 +41,7 @@ public class UserRole {
     @Column(name = "LAST_MODIFIED_DATE")
     private Date lastModifiedDate;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

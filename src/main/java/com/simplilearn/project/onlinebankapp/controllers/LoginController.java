@@ -91,7 +91,7 @@ public class LoginController {
     )
     public ModelAndView createNewUser(@ModelAttribute("user") User userDTO, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        if (userService.findUserByUsername(userDTO.getUsername())) {
+        if (userService.findUserByUsername(userDTO.getUsername()) != null) {
             bindingResult
                     .rejectValue("username", "error.user",
                             "There is already a user registered with the user name provided");
@@ -122,10 +122,10 @@ public class LoginController {
             modelAndView.addObject("user", User.builder().build());
             if(registeredUser != null) {
                 modelAndView.addObject("message", "User [" + registeredUser.getId() + "] has been registered successfully");
-                modelAndView.setViewName("login");
+                modelAndView.setViewName("redirect:/user");
             }else {
                 modelAndView.addObject("message", "Failed to register User...");
-                modelAndView.setViewName("register");
+                modelAndView.setViewName("signup");
             }
 
         }

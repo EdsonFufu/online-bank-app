@@ -23,7 +23,7 @@ public class UserService {
         return userRepository.save(user);
     }
     public User findById(long id) {
-        return userRepository.getById(id);
+        return userRepository.getReferenceById(id);
     }
 
     public List<User> findAll(){
@@ -39,13 +39,8 @@ public class UserService {
             return false;
         }
     }
-    public boolean findUserByUsername(String username){
-        try {
-            return userRepository.findUserByUsername(username).isPresent();
-
-        }catch (NullPointerException nullPointerException){
-            return false;
-        }
+    public User findUserByUsername(String username){
+        return userRepository.findUserByUsername(username).orElse(null);
     }
 
     public boolean exists(long id){

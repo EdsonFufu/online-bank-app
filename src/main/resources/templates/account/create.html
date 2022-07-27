@@ -11,49 +11,54 @@
 
 <body>
 <div class="page-wrapper" layout:fragment="content">
-
-    <div class="card mt-5 px-5 p-3">
+    <div class="card m-4">
         <div class="card-header">
-            <h5 class="card-title mb-0">Create Customer</h5>
+            <h5 class="card-title">Create</h5>
+            <h6 class="card-subtitle text-muted">Account</h6>
         </div>
         <div class="card-body">
-            <div class="m-sm-4">
-                <form method="post" th:object="${user}">
-                    <div class="mb-3 input-group">
-                        <div class="col-md-6 px-2">
-                            <label class="form-label">First Name</label>
-                            <input class="form-control form-control-lg" type="text" name="firstname" placeholder="Enter your First Name" th:field="*{firstName}" />
-                        </div>
-                        <div class="col-md-6 px-2">
-                            <label class="form-label">Last Name</label>
-                            <input class="form-control form-control-lg" type="text" name="lastname" placeholder="Enter your Last Name" th:field="*{lastName}" />
-                        </div>
+            <form method="post" th:object="${account}" th:action="@{/account}">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" for="inputAccount4">Account Number</label>
+                        <input type="text" class="form-control" id="inputAccount4" placeholder="AccountNumber" th:field="*{accountNumber}" />
                     </div>
-                    <div class="mb-3 input-group">
-                        <div class="col-md-6 px-2">
-                            <label class="form-label">Username</label>
-                            <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your Username" th:field="*{username}" />
-                        </div>
-                        <div class="col-md-6 px-2">
-                            <label class="form-label">Password</label>
-                            <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your Password" th:field="*{password}" />
-                        </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" for="inputAccount5">Account Name</label>
+                        <input type="text" class="form-control" id="inputAccount5" placeholder="AccountName" th:field="*{accountName}" />
                     </div>
-                    <div class="mb-3 input-group">
-                        <div class="col-md-6 px-2">
-                            <label class="form-label">Email</label>
-                            <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your Email" th:field="*{email}" />
-                        </div>
-                        <div class="col-md-6 px-2">
-                            <label class="form-label">Mobile</label>
-                            <input class="form-control form-control-lg" type="text" name="mobile" placeholder="Enter your Mobile" th:field="*{mobile}" />
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label class="form-label" for="inputBalance">Balance</label>
+                        <input type="text" class="form-control" id="inputBalance" th:field="*{balance}" />
                     </div>
-                    <div class="text-lg-end mt-3">
-                        <button type="submit" class="btn btn-lg btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button>
+                    <div class="mb-3 col-md-4">
+                        <label class="form-label" for="inputState">Currency</label>
+                        <select id="inputState" class="form-control" th:field="*{currency}">
+                            <option selected value="">Choose...</option>
+                            <option value="TZS">Tanzania Shilling</option>
+                            <option value="USD">US Dollar</option>
+                        </select>
                     </div>
-                </form>
-            </div>
+                    <div class="mb-3 col-md-4">
+                        <label class="form-label" for="inputState">Status</label>
+                        <select id="inputState1" class="form-control" th:field="*{status}">
+                            <option selected value="false">Choose...</option>
+                            <option value="true">Activate</option>
+                            <option value="false">Diactivate</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="inputState">Customer</label>
+                    <select id="inputState2" class="form-control" th:field="*{customerId}">
+                        <option selected th:value="${0}">Choose...</option>
+                        <option th:each="usr:${users}" th:value="${usr.getId()}" th:text="${usr.getFirstName() + ' ' + usr.getLastName()}">Customer Name</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
         </div>
     </div>
 </div>
