@@ -64,7 +64,7 @@ public class Account implements Serializable {
     private User user;
 
     public String getFormatedBalance(){
-        return String.format("TZS %,.2f",balance);
+        return String.format(" TZS %,.2f",balance);
     }
 
     @SneakyThrows

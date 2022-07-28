@@ -10,7 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,4 +53,8 @@ public class TransactionService {
         return new Paged<>(accountPage, Paging.of(accountPage.getTotalPages(), pageNumber, size));
     }
 
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public List<Transaction>  saveAll(List<Transaction> transactions) {
+        return transactionRepository.saveAll(transactions);
+    }
 }

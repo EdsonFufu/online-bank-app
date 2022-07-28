@@ -56,4 +56,8 @@ public class AccountService {
         }
        return stringBuilder.toString();
     }
+
+    public Account findByAccountNumber(String accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber);
+    }
 }

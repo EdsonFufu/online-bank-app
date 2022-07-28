@@ -1,23 +1,21 @@
 package com.simplilearn.project.onlinebankapp.controllers;
 
+import com.simplilearn.project.onlinebankapp.entities.CheckBookRequest;
+import com.simplilearn.project.onlinebankapp.entities.Transfer;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class ApiController {
-    @PostMapping("/withdraw")
-    public String withdraw(@RequestBody String payload){
-        return "";
-    }
-
     @PostMapping("/account/transfer")
-    public String transfer(@RequestBody String payload){
-        return "";
+    public ResponseEntity<Transfer> transfer(@RequestBody Transfer transfer){
+        return null;
     }
 
-    @GetMapping("/transaction")
-    public String transactions(){
-        return "";
+    @GetMapping("/request-check-book")
+    public ResponseEntity<String> checkBook(@RequestBody CheckBookRequest checkBookRequest){
+        return null;
     }
 
     @GetMapping("/transaction/{id}")

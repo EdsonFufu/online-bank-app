@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html
+        xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/main}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Transaction</title>
+</head>
+
+<body>
+<div class="page-wrapper" layout:fragment="content">
+    <div class="container mt-5">
+        <div class="container-fluid p-0">
+
+            <div class="row">
+
+                <div class="col-12 col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title" th:text="${'Transaction#:' + transaction.getId()}"></h5>
+                            <h6 class="card-subtitle text-primary text-lg-end" th:text="${'Balance[' + account.getFormatedBalance() + ']'}"></h6>
+                        </div>
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th style="width:25%">SourceAccount</th>
+                                <td class="d-none d-md-table-cell"  th:text="${transaction.getSourceAccount()}">AccountName</td>
+                            </tr>
+                            <tr>
+                                <th style="width:25%">DestinationAccount</th>
+                                <td class="d-none d-md-table-cell"  th:text="${transaction.getDestAccount()}">AccountType</td>
+                            </tr>
+                            <tr>
+                                <th style="width:25%">DRCR</th>
+                                <td class="d-none d-md-table-cell"  th:text="${transaction.getDrcr()}">Currency</td>
+                            </tr>
+                            <tr>
+                                <th style="width:25%">Amount</th>
+                                <td class="d-none d-md-table-cell"  th:text="${transaction.getAmount()}">Currency</td>
+                            </tr>
+                            <tr>
+                                <th style="width:25%">Balance</th>
+                                <td class="d-none d-md-table-cell"  th:text="${transaction.getBalance()}">Currency</td>
+                            </tr>
+
+                            <tr>
+                                <th style="width:25%">Success?</th>
+                                <td class="d-none d-md-table-cell">
+                                    <div th:if="${transaction.isStatus()}">
+                                        <span class="badge bg-success rounded-pill d-inline"><i class="fa fa-check"></i></span>
+                                    </div>
+                                    <div th:unless="${transaction.isStatus()}">
+                                        <span class="badge bg-warning rounded-pill d-inline"><i class="fa fa-times"></i></span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th style="width:25%">Description</th>
+                                <td class="d-none d-md-table-cell"  th:text="${transaction.getDescription()}">Currency</td>
+                            </tr>
+
+                            <tr>
+                                <th style="width:25%">Narration</th>
+                                <td class="d-none d-md-table-cell"  th:text="${transaction.getNarration()}">Currency</td>
+                            </tr>
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

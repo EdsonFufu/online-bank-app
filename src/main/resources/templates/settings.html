@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/main}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Settings</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+
+    <div class="card m-4 mb-7">
+        <div class="card-header">
+            <h5 class="card-title">Create OR Update</h5>
+            <h6 class="card-subtitle text-muted">Settings</h6>
+        </div>
+        <div class="card-body">
+            <div class="">
+                <form method="post" th:object="${settings}" th:action="@{/bank/setting}">
+                    <div class="col-md-12 px-2">
+                        <label class="form-label">Id</label>
+                        <input class="form-control form-control-lg" type="text" name="id" placeholder="Id" th:field="*{id}" readonly />
+                    </div>
+                    <div class="col-md-12 px-2">
+                        <label class="form-label">CompanyName</label>
+                        <input class="form-control form-control-lg" type="text" name="companyName" placeholder="Enter your companyName" th:field="*{companyName}" />
+                    </div>
+                    <div class="col-md-12 px-2">
+                        <label class="form-label">AccountNumber</label>
+                        <input class="form-control form-control-lg" type="text" name="accountNumber" placeholder="Enter your accountNumber" th:field="*{accountNumber}" />
+                    </div>
+
+                    <div class="col-md-12 px-2">
+                        <label class="form-label">address</label>
+                        <input class="form-control form-control-lg" type="text" name="address" placeholder="Enter your accountNumber" th:field="*{address}" />
+                    </div>
+
+                    <div class="col-md-12 px-2">
+                        <label class="form-label">mobile</label>
+                        <input class="form-control form-control-lg" type="text" name="mobile" placeholder="Enter your accountNumber" th:field="*{mobile}" />
+                    </div>
+
+                    <div class="col-md-12 px-2">
+                        <label class="form-label">withdrawFee</label>
+                        <input class="form-control form-control-lg" type="text" name="accountNumber" placeholder="Enter your accountNumber" th:field="*{withdrawFee}" />
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-lg btn-outline-success float-start">Save <i class="fa fa-plus-circle"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>
+

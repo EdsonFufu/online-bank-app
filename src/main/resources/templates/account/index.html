@@ -12,12 +12,59 @@
 <body>
 <div class="page-wrapper" layout:fragment="content">
     <div class="container mt-5">
+        <h3 class="card-title mb-3 float-left pull-left">Accounts</h3>
         <div class="card flex-fill">
             <div class="card-header">
 
-                <h5 class="card-title mb-0 float-left pull-left">Accounts</h5>
-                <div class="h3 pull-right text-lg-start"><a th:href="@{/account/deposit}"><button class="btn btn-outline-info"><i class="fa fa-plus-square"></i> Deposit</button></a></div>
-                <div class="h3 pull-right text-lg-end"><a th:href="@{/account/create}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></div>
+                <span class="h3 pull-left float-start text-lg-start">
+                    <!-- BEGIN primary modal -->
+                    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#centeredModalPrimary">
+                        <i class="fa fa-plus-square"></i> Deposit
+                    </button>
+                    <div class="modal fade" id="centeredModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <form method="post" th:action="@{/account/deposit}" th:object="${deposit}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Deposit Money</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body m-3">
+                                    <p class="mb-0">Please confrim customer details before deposit</p>
+
+
+                                    <div class="card-body">
+
+										<div class="mb-3">
+											<label class="form-label">Account Number</label>
+											<input type="text" class="form-control" required placeholder="Account Number" th:field="*{accountNumber}" />
+										</div>
+										<div class="mb-3">
+											<label class="form-label">Amount</label>
+											<input type="text" class="form-control" required placeholder="Amount" th:field="*{amount}" />
+										</div>
+										<div class="mb-3">
+											<label class="form-label">Description</label>
+											<textarea class="form-control" placeholder="Description" required rows="2" th:field="*{description}"></textarea>
+										</div>
+
+								</div>
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" th:onsubmit="return confirm('You are going to deposit amount to account ?')">Deposit Amount</button>
+                                </div>
+
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END primary modal -->
+                </span>
+                <span class="h3 pull-right float-end text-lg-end"><a th:href="@{/account/create}"><button class="btn btn-outline-primary"><i class="fa fa-plus-circle"></i> Create</button></a></span>
 
             </div>
             <table class="table table-hover my-0">

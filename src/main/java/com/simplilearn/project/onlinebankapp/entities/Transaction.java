@@ -40,6 +40,9 @@ public class Transaction implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "NARRATION")
+    private String narration;
+
     @Column(name = "BALANCE")
     private String balance;
 

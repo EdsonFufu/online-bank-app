@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html
+        xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/main}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Accounts</title>
+</head>
+
+<body>
+<div class="page-wrapper" layout:fragment="content">
+    <div class="container mt-5 mb-7">
+<!--        <h3 class="card-title mb-3 float-left pull-left">Transactions</h3>-->
+        <div class="card flex-fill">
+            <div class="card-header">
+                Transactions
+            </div>
+            <table class="table table-hover my-0">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>SouceAcc</th>
+                    <th>DestAcc</th>
+                    <th>DRCR</th>
+                    <th>amount</th>
+                    <th>balance</th>
+                    <th class="d-none d-md-table-cell">Action</th>
+                </tr>
+                </thead>
+                <tbody th:if="${transactions.page.totalPages > 0}">
+                <tr th:each="transaction:${transactions.page}">
+                    <td th:text="${transactionStat.index + 1}">1</td>
+                    <td th:text="${transaction.getSourceAccount()}">SourceAccount</td>
+                    <td th:text="${transaction.getDestAccount()}">DestinationAccount</td>
+                    <td th:text="${transaction.getDrcr()}">DRCR</td>
+                    <td th:text="${transaction.getAmount()}">DRCR</td>
+                    <td th:text="${transaction.getBalance()}">Balance</td>
+                    <td class="table-action">
+                        <a th:href="@{'/transaction/view/' + ${transaction.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye align-middle me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+<!--                        <a th:href="@{'/transaction/edit/' + ${transaction.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle me-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>-->
+<!--                        <a th:href="@{'/account/delete/' + ${transaction.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>                    -->
+                    </td>
+                </tr>
+                </tbody>
+                <tbody th:unless="${transactions.page.totalPages > 0}">
+                    <tr>
+                        <td colspan="9">No Data Available</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="9">
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatables-reponsive_paginate" th:if="${transactions.page.totalPages > 1}">
+
+
+                        <ul  th:style="${'list-style-type:none'}" class="pagination" th:if="${transactions.page.totalPages > 1}">
+                            <li class="page-item" th:classappend="${!transactions.paging.isPrevEnabled()? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{'/transaction/?pageNumber=' + ${transactions.paging.pageNumber - 1}}"
+                                   tabindex="-1"> <span aria-hidden="true">«</span></a>
+                            </li>
+                            <th:block th:each="item : ${transactions.paging.getItems()}">
+                                <li class="page-item" th:classappend="${item.index == transactions.paging.pageNumber? 'active' : ''}"
+                                    th:if="${item.pageItemType.name() == 'PAGE'}">
+                                    <a class="page-link" th:href="@{'/transaction/?pageNumber=' + ${item.index}}"
+                                       th:text="${item.index}"></a>
+                                </li>
+                                <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                                    <a class="page-link" href="#">...</a>
+                                </li>
+                            </th:block>
+                            <li class="page-item" th:classappend="${!transactions.paging.isNextEnabled()? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{'/transaction/?pageNumber=' + ${transactions.paging.pageNumber + 1}}"><span aria-hidden="true">»</span></a>
+                            </li>
+
+                        </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>
