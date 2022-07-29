@@ -1,18 +1,12 @@
 package com.simplilearn.project.onlinebankapp.controllers;
 
 import com.simplilearn.project.onlinebankapp.entities.UserRole;
-import com.simplilearn.project.onlinebankapp.repository.UserRoleRepository;
 import com.simplilearn.project.onlinebankapp.service.UserRoleService;
-import com.simplilearn.project.onlinebankapp.utils.AuthUtils;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/user-role")

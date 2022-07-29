@@ -31,7 +31,7 @@ public class TransactionController {
     }
     @GetMapping("/view/{id}")
     public ModelAndView get(@PathVariable("id") long id) throws NotFoundException {
-        ModelAndView modelAndView = new ModelAndView("account/view");
+        ModelAndView modelAndView = new ModelAndView("transaction/view");
         Transaction transaction  = transactionService.findById(id);
         if(transaction != null){
             modelAndView.addObject("transaction",transaction);

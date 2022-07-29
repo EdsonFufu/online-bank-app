@@ -9,9 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transfer {
-    private String sourceAccount;
-    private String destinationAccount;
-    private String amount;
-    private String description;
+public class LoginReq {
+    private String username;
+    private String password;
 }

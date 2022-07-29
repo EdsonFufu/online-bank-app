@@ -46,6 +46,9 @@ public class Transaction implements Serializable {
     @Column(name = "BALANCE")
     private String balance;
 
+    @Column(name = "STATUS")
+    private boolean status;
+
     @CreationTimestamp
     @Temporal(TIMESTAMP)
     @Column(name = "CREATED_DATE")
@@ -60,7 +63,6 @@ public class Transaction implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId",referencedColumnName = "id")
     private User user;
-
 
     @SneakyThrows
     @Override

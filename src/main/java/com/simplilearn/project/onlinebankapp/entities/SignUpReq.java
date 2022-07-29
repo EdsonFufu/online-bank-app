@@ -9,9 +9,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transfer {
-    private String sourceAccount;
-    private String destinationAccount;
-    private String amount;
-    private String description;
+public class SignUpReq {
+    private enum Role {
+        ROLE_CUSTOMER,
+        ROLE_ADMIN,
+        ROLE_TELLER
+    }
+    private String username;
+    private String password;
+    private String email;
 }
+

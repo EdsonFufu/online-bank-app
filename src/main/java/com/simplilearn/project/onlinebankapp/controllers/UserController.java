@@ -2,10 +2,7 @@ package com.simplilearn.project.onlinebankapp.controllers;
 
 import com.simplilearn.project.onlinebankapp.entities.ChangePassword;
 import com.simplilearn.project.onlinebankapp.entities.User;
-import com.simplilearn.project.onlinebankapp.entities.UserRole;
 import com.simplilearn.project.onlinebankapp.service.UserService;
-import com.simplilearn.project.onlinebankapp.utils.AuthUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,8 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping(value = "/user")

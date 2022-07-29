@@ -11,6 +11,7 @@ import com.simplilearn.project.onlinebankapp.service.AccountService;
 import com.simplilearn.project.onlinebankapp.service.SettingService;
 import com.simplilearn.project.onlinebankapp.service.TransactionService;
 import com.simplilearn.project.onlinebankapp.service.UserService;
+import com.simplilearn.project.onlinebankapp.utils.AccountUtil;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.NotFound;
@@ -109,58 +110,17 @@ public class AccountController {
         }
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Account account = accountService.findByAccountNumber(deposit.getAccountNumber());
-
-        double balance = account.getBalance();
-
-        double newBalance = balance + deposit.getAmount();
-
-        account.setBalance(newBalance);
-
-        Account accountCR = accountService.save(account);
-
         Account mainAccount = accountService.findByAccountNumber(settingService.getSettings().getAccountNumber());
 
-        double mainAccountBalance = mainAccount.getBalance();
+        String narration = "Transfer " + String.format("TZS %,.2f",deposit.getAmount()) +" from [" + mainAccount.getAccountNumber() + "] to [" + deposit.getAccountNumber() + "]";
 
-        double mainAccountNewBalance = mainAccountBalance - deposit.getAmount();
+        boolean success = new AccountUtil().transfer(userDetails.getUsername(), mainAccount.getAccountNumber(), deposit.getAccountNumber(), deposit.getAmount(),deposit.getDescription(),narration,accountService,transactionService,userService);
 
-        mainAccount.setBalance(mainAccountNewBalance);
-
-        Account accountDR = accountService.save(mainAccount);
-
-        Transaction txnDR = Transaction.builder()
-                .sourceAccount(mainAccount.getAccountNumber())
-                .destAccount(account.getAccountNumber())
-                .amount(String.valueOf(deposit.getAmount()))
-                .description(deposit.getDescription())
-                .narration("DEBIT " + String.format("%,.2f",deposit.getAmount()))
-                .balance(accountDR.getFormatedBalance())
-                .drcr("DR")
-                .user(userService.findUserByUsername(userDetails.getUsername()))
-                .build();
-
-        Transaction txnCR = Transaction.builder()
-                .sourceAccount(accountDR.getAccountNumber())
-                .destAccount(account.getAccountNumber())
-                .amount(String.valueOf(deposit.getAmount()))
-                .description(deposit.getDescription())
-                .narration("CREDIT " + String.format("%,.2f",deposit.getAmount()))
-                .balance(accountCR.getFormatedBalance())
-                .drcr("CR")
-                .user(userService.findUserByUsername(userDetails.getUsername()))
-                .build();
-
-        List<Transaction> transactionList = transactionService.saveAll(new ArrayList<Transaction>(){{
-            add(txnDR);
-            add(txnCR);
-        }});
-
-        if(transactionList.size() == 2) {
-            modelAndView.addObject("message", "Amount [" + deposit.getAmount() + "] deposited to account ["+ deposit.getAccountNumber()+"] successfully");
-            modelAndView.setViewName("redirect:/account/view/" + account.getId());
+        if(success) {
+            modelAndView.addObject("message", narration+" successfully");
+            modelAndView.setViewName("redirect:/account/view/" + accountService.findByAccountNumber(deposit.getAccountNumber()).getId());
         }else {
-            modelAndView.addObject("message", "Failed to Deposit Amount...");
+            modelAndView.addObject("message", narration + " Failed");
             modelAndView.setViewName("account/index");
             modelAndView.addObject("accounts",accountService.getPage(pageNumber, size));
         }

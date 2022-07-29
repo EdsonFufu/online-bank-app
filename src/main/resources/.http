@@ -1,0 +1,77 @@
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "firstName": "Vivian",
+  "lastName": "Vivian",
+  "phone": "0717626262",
+  "email": "vivian.edaon@gmail.com",
+  "username": "vivian",
+  "password": "12345678"
+}
+
+###
+PUT http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "id": 11,
+  "firstName": "Vivian",
+  "lastName": "Edson",
+  "phone": "0717626262",
+  "email": "vivian.edson@gmail.com",
+  "username": "vivian",
+  "password": "12345678",
+  "roles": [],
+  "accounts": []
+}
+###
+GET http://localhost:8081/api/request-check-book
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aWN0b3JpYSIsImlhdCI6MTY1OTExMTgxOCwiZXhwIjoxNjU5MTk4MjE4fQ.TZo0VL_V-Yd3pMKNjWNMjNNeJqrmryuf8xrFNZ-MPxQk7XqkVUmc_XbtrI0mvPtZBg5_PY-Y2o5_OgQvUl3Y0A
+###
+GET http://localhost:8081/api/transaction
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aWN0b3JpYSIsImlhdCI6MTY1OTExMTgxOCwiZXhwIjoxNjU5MTk4MjE4fQ.TZo0VL_V-Yd3pMKNjWNMjNNeJqrmryuf8xrFNZ-MPxQk7XqkVUmc_XbtrI0mvPtZBg5_PY-Y2o5_OgQvUl3Y0A
+###
+GET http://localhost:8080/user/3
+###
+
+DELETE http://localhost:8080/user/7
+
+###
+POST http://localhost:8081/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "victor",
+  "password": "victor",
+  "email": "victor@gmail.com"
+}
+###
+POST http://localhost:8081/api/auth/signin
+Content-Type: application/json
+
+{
+"username": "vivian",
+"password": "vivian"
+}
+
+###
+
+POST http://localhost:8081/api/request-check-book/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aXZpYW4iLCJpYXQiOjE2NTkxMTMyNTYsImV4cCI6MTY1OTE5OTY1Nn0.JpR3vFK1bzt-IQKilEhzWlFjW60H5-k_K0aGNrzgseObb00boReV-k_F0coFC1DDfZGzTdyGeeTczJGXek3zIQ
+
+{
+
+}
+
+###
+POST http://localhost:8081/api/request-check-book/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlZHNvbiIsImlhdCI6MTY1OTExMzEzMiwiZXhwIjoxNjU5MTk5NTMyfQ.vmyfK-xp8I8b3skV4LSqqfyRecV62iXW1jEHl6mpbOddlbBdZ7yXbWXkLvA0BVbJx5ksEuHEu-Ao-p6eZyQdmQ
+
+{
+
+}
