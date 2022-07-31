@@ -1,4 +1,4 @@
-package com.simplilearn.project.onlinebankapp;
+package com.simplilearn.project.onlinebankapp.entities;
 
 import lombok.*;
 

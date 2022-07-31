@@ -12,6 +12,6 @@ import lombok.Setter;
 public class Transfer {
     private String sourceAccount;
     private String destinationAccount;
-    private String amount;
+    private double amount;
     private String description;
 }

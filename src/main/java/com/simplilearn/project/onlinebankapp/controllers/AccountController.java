@@ -1,20 +1,14 @@
 package com.simplilearn.project.onlinebankapp.controllers;
 
-import com.simplilearn.project.onlinebankapp.AccountDTO;
+import com.simplilearn.project.onlinebankapp.entities.AccountDTO;
 import com.simplilearn.project.onlinebankapp.entities.Account;
 import com.simplilearn.project.onlinebankapp.entities.Deposit;
-import com.simplilearn.project.onlinebankapp.entities.Transaction;
-import com.simplilearn.project.onlinebankapp.entities.User;
-import com.simplilearn.project.onlinebankapp.repository.AccountRepository;
-import com.simplilearn.project.onlinebankapp.repository.SettingsRepository;
 import com.simplilearn.project.onlinebankapp.service.AccountService;
 import com.simplilearn.project.onlinebankapp.service.SettingService;
 import com.simplilearn.project.onlinebankapp.service.TransactionService;
 import com.simplilearn.project.onlinebankapp.service.UserService;
 import com.simplilearn.project.onlinebankapp.utils.AccountUtil;
 import javassist.NotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,10 +17,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/account")

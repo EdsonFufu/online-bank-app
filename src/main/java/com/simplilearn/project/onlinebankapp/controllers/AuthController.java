@@ -52,7 +52,9 @@ public class AuthController {
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(LoginRes.builder().jwt(jwt).userId(String.valueOf(user.getId())).email(user.getEmail()).username(user.getUsername()).roles(roles).account(user.getAccounts().get(0)).build());
+		Account account = user.getAccounts().get(0);
+
+		return ResponseEntity.ok(LoginRes.builder().jwt(jwt).userId(String.valueOf(user.getId())).email(user.getEmail()).username(user.getUsername()).roles(roles).account(account.getAccountNumber()).balance(account.getFormatedBalance()).build());
 
 	}
 	@PostMapping("/signup")

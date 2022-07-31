@@ -32,7 +32,7 @@
                 <tbody th:if="${checkBookRequests.page.totalPages > 0}">
                 <tr th:each="checkBookRequest:${checkBookRequests.page}">
                     <td th:text="${checkBookRequestStat.index + 1}">1</td>
-                    <td th:text="${checkBookRequest.getCustomerName()}">CustomerName</td>
+                    <td th:text="${checkBookRequest.getUser().getUsername()}">CustomerName</td>
 
                     <td>
                         <div th:if="${checkBookRequest.isApproved()}">
@@ -51,10 +51,10 @@
                         </div>
                     </td>
 
-                    <td th:text="${checkBookRequest.createdDate()}">Created Date</td>
+                    <td th:text="${checkBookRequest.getCreatedDate()}">Created Date</td>
                     <td th:text="${checkBookRequest.getCollectedDate()}">Collected Date</td>
                     <td class="table-action">
-                        <a th:href="@{'/check-book-request/view/' + ${transaction.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye align-middle me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                        <a th:href="@{'/check-book-request/view/' + ${checkBookRequest.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye align-middle me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
                     </td>
                 </tr>
                 </tbody>

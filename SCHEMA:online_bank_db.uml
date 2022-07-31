@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>9d2a19f7-0500-4fa9-803c-13042be0f479.SCHEMA:online_bank_db</OriginalElement>
+  <nodes>
+    <node x="72.85383244206773" y="282.4474153297683">9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.account</node>
+    <node x="455.36720142602496" y="347.3172905525847">9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.transaction</node>
+    <node x="405.0" y="-181.0">9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.user</node>
+    <node x="-199.5" y="304.4474153297683">9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.check_book_request</node>
+    <node x="817.7094474153298" y="368.36720142602496">9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.user_roles</node>
+    <node x="688.1140819964351" y="-82.35115864527629">9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.settings</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.user_roles" target="9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.user" relationship="REFERENCES">
+      <point x="0.0" y="-71.0" />
+      <point x="927.7094474153298" y="206.0" />
+      <point x="522.0" y="206.0" />
+      <point x="0.0" y="181.0" />
+    </edge>
+    <edge source="9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.check_book_request" target="9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.user" relationship="REFERENCES">
+      <point x="-0.0" y="-104.0" />
+      <point x="-87.0" y="0.0" />
+      <point x="-117.0" y="-0.0" />
+    </edge>
+    <edge source="9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.transaction" target="9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.user" relationship="REFERENCES">
+      <point x="0.0" y="-148.0" />
+      <point x="582.367201426025" y="206.0" />
+      <point x="522.0" y="206.0" />
+      <point x="0.0" y="181.0" />
+    </edge>
+    <edge source="9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.account" target="9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.user" relationship="REFERENCES">
+      <point x="0.0" y="-126.0" />
+      <point x="187.85383244206773" y="206.0" />
+      <point x="522.0" y="206.0" />
+      <point x="0.0" y="181.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6791767554479419" showDependencies="false" x="465.6889483065953" y="470.83065953654193" />
+  <SelectedNodes>
+    <node>9d2a19f7-0500-4fa9-803c-13042be0f479.TABLE:online_bank_db.settings</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

@@ -16,5 +16,6 @@ public class LoginRes {
     private String username;
     private String email;
     private List<String> roles = new ArrayList<>();
-    private Account account;
+    private String account;
+    private String balance;
 }
