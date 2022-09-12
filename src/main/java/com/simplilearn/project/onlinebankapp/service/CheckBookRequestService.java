@@ -27,7 +27,7 @@ public class CheckBookRequestService {
        return checkBookRequestRepository.save(checkBookRequest);
     }
 
-    public List<CheckBookRequest> findAll(long userId){
-        return checkBookRequestRepository.findAllById(Collections.singleton(userId));
+    public List<CheckBookRequest> findAll(){
+        return checkBookRequestRepository.findAll();
     }
 }

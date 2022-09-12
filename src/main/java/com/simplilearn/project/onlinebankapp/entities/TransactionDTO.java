@@ -7,10 +7,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AccountDTOAPI {
-    private String name;
-    private String type;
-    private String accnumber;
+public class TransactionDTO {
+    private String destinationAccount;
+    private String amount;
     private String balance;
     private boolean status;
+    private String transactionDate;
 }

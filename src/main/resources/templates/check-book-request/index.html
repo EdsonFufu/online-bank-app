@@ -54,7 +54,10 @@
                     <td th:text="${checkBookRequest.getCreatedDate()}">Created Date</td>
                     <td th:text="${checkBookRequest.getCollectedDate()}">Collected Date</td>
                     <td class="table-action">
-                        <a th:href="@{'/check-book-request/view/' + ${checkBookRequest.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye align-middle me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                        <a class="px-3" th:href="@{'/check-book-request/view/' + ${checkBookRequest.getId()}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye align-middle me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                        <a  th:href="@{'/check-book-request/approve/' + ${checkBookRequest.getId()}}" class="btn btn-outline-warning px-2 mx-2"> Approve</a>
+                        <a  th:href="@{'/check-book-request/collected/' + ${checkBookRequest.getId()}}" class="btn btn-outline-success px-2 mx-2"> Mark Collected</a>
+
                     </td>
                 </tr>
                 </tbody>

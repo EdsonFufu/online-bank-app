@@ -18,10 +18,13 @@
 
                 <span class="h3 pull-left float-start text-lg-start">
                     <!-- BEGIN primary modal -->
-                    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#centeredModalPrimary">
+                    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#centeredModalPrimary1">
                         <i class="fa fa-plus-square"></i> Deposit
                     </button>
-                    <div class="modal fade" id="centeredModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#centeredModalPrimary2">
+                        <i class="fa fa-minus-square"></i> Widthdraw
+                    </button>
+                    <div class="modal fade" id="centeredModalPrimary1" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <form method="post" th:action="@{/account/deposit}" th:object="${deposit}">
                             <div class="modal-content">
@@ -56,6 +59,47 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary" th:onsubmit="return confirm('You are going to deposit amount to account ?')">Deposit Amount</button>
+                                </div>
+
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="centeredModalPrimary2" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <form method="post" th:action="@{/account/withdraw}" th:object="${withdraw}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Withdraw Money</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body m-3">
+                                    <p class="mb-0">Please confrim customer details before withdraw</p>
+
+
+                                    <div class="card-body">
+
+										<div class="mb-3">
+											<label class="form-label">Account Number</label>
+											<input type="text" class="form-control" required placeholder="Account Number" th:field="*{accountNumber}" />
+										</div>
+										<div class="mb-3">
+											<label class="form-label">Amount</label>
+											<input type="text" class="form-control" required placeholder="Amount" th:field="*{amount}" />
+										</div>
+										<div class="mb-3">
+											<label class="form-label">Description</label>
+											<textarea class="form-control" placeholder="Description" required rows="2" th:field="*{description}"></textarea>
+										</div>
+
+								</div>
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" th:onsubmit="return confirm('You are going to widthdraw amount to account ?')">Withdraw Amount</button>
                                 </div>
 
                             </div>

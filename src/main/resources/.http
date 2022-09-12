@@ -40,21 +40,20 @@ GET http://localhost:8080/user/3
 DELETE http://localhost:8080/user/7
 
 ###
-POST http://localhost:8081/api/auth/signup
+POST http://localhost:8081/api/auth/signin
 Content-Type: application/json
 
 {
-  "username": "victor",
-  "password": "victor",
-  "email": "victor@gmail.com"
+  "username": "vivian",
+  "password": "vivian"
 }
 ###
 POST http://localhost:8081/api/auth/signin
 Content-Type: application/json
 
 {
-"username": "edson",
-"password": "edson"
+  "username": "vivian",
+  "password": "vivian"
 }
 
 ###
@@ -71,13 +70,9 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2YWxlcmllIiwiaWF0IjoxNjU5M
 
 
 ###
-POST http://localhost:8081/api/request-check-book/1
+POST http://localhost:8081/api/check-book-request
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlZHNvbiIsImlhdCI6MTY1OTExMzEzMiwiZXhwIjoxNjU5MTk5NTMyfQ.vmyfK-xp8I8b3skV4LSqqfyRecV62iXW1jEHl6mpbOddlbBdZ7yXbWXkLvA0BVbJx5ksEuHEu-Ao-p6eZyQdmQ
-
-{
-
-}
 
 ###
 POST http://localhost:8081/api/account/transfer
@@ -90,3 +85,24 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2YWxlcmllIiwiaWF0IjoxNjU5M
   "amount": "15000000",
   "description": "Transfer 500,000/- to Vivian"
 }
+
+###
+GET http://localhost:8081/api/user/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aXZpYW4iLCJpYXQiOjE2NjI5MDkyMzQsImV4cCI6MTY2Mjk5NTYzNH0.uM0IMcjMNoEgO1pT31spMEXFIfSRu5vpq3Gg-Tl3r9iNciooY2xSwD1l42H3hjm5aQc7iHEdDN4-xY711q6PxQ
+
+###
+GET http://localhost:8081/api/check-book-request
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aXZpYW4iLCJpYXQiOjE2NjI5MDkyMzQsImV4cCI6MTY2Mjk5NTYzNH0.uM0IMcjMNoEgO1pT31spMEXFIfSRu5vpq3Gg-Tl3r9iNciooY2xSwD1l42H3hjm5aQc7iHEdDN4-xY711q6PxQ
+
+###
+POST http://localhost:8081/api/check-book-request
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aXZpYW4iLCJpYXQiOjE2NjI5MDkyMzQsImV4cCI6MTY2Mjk5NTYzNH0.uM0IMcjMNoEgO1pT31spMEXFIfSRu5vpq3Gg-Tl3r9iNciooY2xSwD1l42H3hjm5aQc7iHEdDN4-xY711q6PxQ
+
+###
+GET http://localhost:8081/api/transaction
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aXZpYW4iLCJpYXQiOjE2NjI5MDkyMzQsImV4cCI6MTY2Mjk5NTYzNH0.uM0IMcjMNoEgO1pT31spMEXFIfSRu5vpq3Gg-Tl3r9iNciooY2xSwD1l42H3hjm5aQc7iHEdDN4-xY711q6PxQ
+

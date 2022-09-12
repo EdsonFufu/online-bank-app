@@ -5,6 +5,7 @@ import com.simplilearn.project.onlinebankapp.repository.UserRepository;
 import com.simplilearn.project.onlinebankapp.service.UserRoleService;
 import com.simplilearn.project.onlinebankapp.service.UserService;
 import com.simplilearn.project.onlinebankapp.utils.JwtTokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +24,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@Slf4j
+@CrossOrigin(origins = "*", maxAge = 33600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -40,22 +42,30 @@ public class AuthController {
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginReq loginRequest) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
-		
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		try {
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+			if (authentication.isAuthenticated()) {
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+				String jwt = jwtUtils.generateJwtToken(authentication);
 
-		User user = userService.findUserByUsername(userDetails.getUsername());
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(GrantedAuthority::getAuthority)
-				.collect(Collectors.toList());
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-		Account account = user.getAccounts().get(0);
+				User user = userService.findUserByUsername(userDetails.getUsername());
+				List<String> roles = userDetails.getAuthorities().stream()
+						.map(GrantedAuthority::getAuthority)
+						.collect(Collectors.toList());
 
-		return ResponseEntity.ok(LoginRes.builder().jwt(jwt).userId(String.valueOf(user.getId())).email(user.getEmail()).username(user.getUsername()).roles(roles).account(account.getAccountNumber()).balance(account.getFormatedBalance()).build());
+				Account account = user.getAccounts().get(0);
 
+				return ResponseEntity.ok(LoginRes.builder().jwt(jwt).userId(String.valueOf(user.getId())).email(user.getEmail()).username(user.getUsername()).roles(roles).account(account.getAccountNumber()).balance(account.getFormatedBalance()).build());
+			}
+
+		}catch (Exception e){
+			log.error(e.getMessage());
+		}
+
+		return ResponseEntity.status(403).body(LoginRes.builder().build());
 	}
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpReq signUpRequest) {

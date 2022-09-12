@@ -3,6 +3,7 @@ package com.simplilearn.project.onlinebankapp.controllers;
 import com.simplilearn.project.onlinebankapp.entities.AccountDTO;
 import com.simplilearn.project.onlinebankapp.entities.Account;
 import com.simplilearn.project.onlinebankapp.entities.Deposit;
+import com.simplilearn.project.onlinebankapp.entities.Withdraw;
 import com.simplilearn.project.onlinebankapp.service.AccountService;
 import com.simplilearn.project.onlinebankapp.service.SettingService;
 import com.simplilearn.project.onlinebankapp.service.TransactionService;
@@ -58,6 +59,7 @@ public class AccountController {
             return modelAndView;
         }
         modelAndView.addObject("deposit",Deposit.builder().build());
+        modelAndView.addObject("withdraw",Withdraw.builder().build());
         modelAndView.addObject("accounts",accountService.getPage(pageNumber, size));
         return modelAndView;
     }
@@ -109,6 +111,36 @@ public class AccountController {
         if(success) {
             modelAndView.addObject("message", narration+" successfully");
             modelAndView.setViewName("redirect:/account/view/" + accountService.findByAccountNumber(deposit.getAccountNumber()).getId());
+        }else {
+            modelAndView.addObject("message", narration + " Failed");
+            modelAndView.setViewName("account/index");
+            modelAndView.addObject("accounts",accountService.getPage(pageNumber, size));
+        }
+        return modelAndView;
+    }
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @PostMapping("/withdraw")
+    public ModelAndView withdraw(@ModelAttribute("deposit") Withdraw withdraw,
+                                @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+                                @RequestParam(value = "size", required = false, defaultValue = "6") int size
+    ){
+        ModelAndView modelAndView = new ModelAndView("account/view");
+
+        if(!SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+            modelAndView.setViewName("redirect:/login");
+            return modelAndView;
+        }
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Account mainAccount = accountService.findByAccountNumber(settingService.getSettings().getAccountNumber());
+
+        String narration = "Withdraw " + String.format("TZS %,.2f",withdraw.getAmount()) +" from [" + withdraw.getAccountNumber() + "]";
+
+        boolean success = new AccountUtil().transfer(userDetails.getUsername(), withdraw.getAccountNumber(),  mainAccount.getAccountNumber(), withdraw.getAmount(),withdraw.getDescription(),narration,accountService,transactionService,userService);
+
+        if(success) {
+            modelAndView.addObject("message", narration+" successfully");
+            modelAndView.setViewName("redirect:/account/view/" + accountService.findByAccountNumber(withdraw.getAccountNumber()).getId());
         }else {
             modelAndView.addObject("message", narration + " Failed");
             modelAndView.setViewName("account/index");

@@ -38,9 +38,10 @@ public class AccountUtil {
                 .amount(String.valueOf(amount))
                 .description(desc)
                 .narration(narration)
-                .balance(sourceAccount.getFormatedBalance())
+                .balance(accountDR.getFormatedBalance())
                 .drcr("DR")
                 .user(userService.findUserByUsername(username))
+                .status(true)
                 .build();
 
         Transaction txnCR = Transaction.builder()
@@ -49,9 +50,10 @@ public class AccountUtil {
                 .amount(String.valueOf(amount))
                 .description(desc)
                 .narration(narration)
-                .balance(destinationAccount.getFormatedBalance())
+                .balance(accountCR.getFormatedBalance())
                 .drcr("CR")
                 .user(userService.findUserByUsername(username))
+                .status(true)
                 .build();
 
         List<Transaction> transactionList = transactionService.saveAll(new ArrayList<>() {{
@@ -60,4 +62,5 @@ public class AccountUtil {
         }});
         return transactionList.size() == 2;
     }
+
 }

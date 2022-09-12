@@ -55,7 +55,9 @@ public class ApiController {
     @GetMapping("/check-book-request")
     public ResponseEntity<List<CheckBookRequestDTO>> checkBookRequest(){
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<CheckBookRequest> bookRequestList = checkBookRequestService.findAll(userService.findUserByUsername(userDetails.getUsername()).getId());
+        long userId = userService.findUserByUsername(userDetails.getUsername()).getId();
+        log.info("UserId:{}",userId);
+        List<CheckBookRequest> bookRequestList = checkBookRequestService.findAll().stream().filter(checkBookRequest -> checkBookRequest.getUser().getId() == userId).collect(Collectors.toList());
         if(bookRequestList.size() > 0){
             return ResponseEntity.ok().header(CONTENT_TYPE,APPLICATION_JSON_VALUE).body(bookRequestList.stream().map(
                     checkBookRequest -> CheckBookRequestDTO.builder().id(checkBookRequest.getId()).approved(checkBookRequest.isApproved()).collected(checkBookRequest.isCollected()).createdDate(checkBookRequest.getCreatedDate().toString()).collectedDate(checkBookRequest.getCollectedDate()).customerName(checkBookRequest.getUser().getFirstName() + " "+ checkBookRequest.getUser().getLastName()).build()).collect(Collectors.toList())
@@ -76,10 +78,23 @@ public class ApiController {
     @PreAuthorize("hasRole('CUSTOMER')")
     @GetMapping("/transaction")
     public ResponseEntity<List<Transaction>> transactions(){
-        List<Transaction> transactions = transactionService.findAll();
-        if(transactions.size() > 0){
-            return ResponseEntity.ok().header(CONTENT_TYPE,APPLICATION_JSON_VALUE).body(transactions);
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Account account = userService.findUserByUsername(userDetails.getUsername()).getAccounts().stream().findFirst().orElse(null);
+
+        log.info("My Account:{}",account);
+
+        if(account != null) {
+
+
+            List<Transaction> transactions = transactionService.findAll().stream().filter(
+                    transaction -> (transaction.getSourceAccount().equals(account.getAccountNumber()) || transaction.getDestAccount().equals(account.getAccountNumber()))
+            ).collect(Collectors.toList());
+            if (transactions.size() > 0) {
+                return ResponseEntity.ok().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).body(transactions);
+            }
         }
+
         return ResponseEntity.notFound().build();
     }
 
@@ -87,8 +102,9 @@ public class ApiController {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @PostMapping("/account/transfer")
     public ResponseEntity<MessageRes> transfer(@RequestBody Transfer transfer){
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String narration = "Transfer " + String.format("TZS %,.2f",transfer.getAmount()) +" from [" + transfer.getSourceAccount() + "] to [" + transfer.getDestinationAccount() + "]";
-        boolean success = new AccountUtil().transfer("",transfer.getSourceAccount(),transfer.getDestinationAccount(), transfer.getAmount(),transfer.getDescription(),narration,accountService,transactionService,userService);
+        boolean success = new AccountUtil().transfer(userDetails.getUsername(),transfer.getSourceAccount(),transfer.getDestinationAccount(), transfer.getAmount(),transfer.getDescription(),narration,accountService,transactionService,userService);
         if(success){
             log.info("Transfer Successfull");
             return ResponseEntity.ok().header(CONTENT_TYPE,APPLICATION_JSON_VALUE).body(new MessageRes(narration + " Successfully"));
@@ -104,12 +120,15 @@ public class ApiController {
 
         User user = userService.findUserByUsername(userDetails.getUsername());
         UserDTO userDTO = UserDTO.builder()
+                .id(user.getId())
                 .firstname(user.getFirstName())
                 .lastname(user.getLastName())
                 .address(user.getAddress())
+                .email(user.getEmail())
                 .mobile(user.getMobile())
                 .username(user.getUsername())
-                .accounts(user.getAccounts().stream().map(user1 -> AccountDTOAPI.builder().name(user1.getAccountName()).accnumber(user1.getAccountNumber()).balance(user1.getFormatedBalance()).status(user1.isStatus()).build()).collect(Collectors.toList()))
+                .accounts(user.getAccounts().stream().map(user1 -> AccountDTOAPI.builder().name(user1.getAccountName()).accnumber(user1.getAccountNumber()).balance(user1.getFormatedBalance()).status(user1.getUser().isEnabled()).build()).collect(Collectors.toList()))
+                .transactions(user.getTransactions().stream().filter(transaction -> transaction.getUser().getId() == user.getId()).collect(Collectors.toList()))
                 .build();
         if(userDTO != null){
             return ResponseEntity.ok().header(CONTENT_TYPE,APPLICATION_JSON_VALUE).body(userDTO);

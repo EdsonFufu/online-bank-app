@@ -43,5 +43,6 @@ public class UserDTO {
     private String password;
 
     private List<AccountDTOAPI> accounts = new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
 }
