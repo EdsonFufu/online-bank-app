@@ -2,6 +2,7 @@ package com.simplilearn.project.onlinebankapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
@@ -13,6 +14,11 @@ public class IcinOnlineBankAppApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(IcinOnlineBankAppApplication.class, args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(IcinOnlineBankAppApplication.class);
     }
 
     @Bean
