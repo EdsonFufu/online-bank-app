@@ -52,8 +52,8 @@ POST http://localhost:8081/api/auth/signin
 Content-Type: application/json
 
 {
-  "username": "vivian",
-  "password": "vivian"
+  "username": "edson",
+  "password": "edson"
 }
 
 ###
@@ -89,7 +89,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2YWxlcmllIiwiaWF0IjoxNjU5M
 ###
 GET http://localhost:8081/api/user/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aXZpYW4iLCJpYXQiOjE2NjI5MDkyMzQsImV4cCI6MTY2Mjk5NTYzNH0.uM0IMcjMNoEgO1pT31spMEXFIfSRu5vpq3Gg-Tl3r9iNciooY2xSwD1l42H3hjm5aQc7iHEdDN4-xY711q6PxQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aXZpYW4iLCJpYXQiOjE2NjMyMjc5MjUsImV4cCI6MTY2MzMxNDMyNX0.UvSHosDBc6KPIejuS_l-eVGYA6kIF81_Hsu8iT1FxkD9WNXCMziBcrFCqG0AyxFO_IOl5K84Y5lPRpOFI9FHBA
 
 ###
 GET http://localhost:8081/api/check-book-request

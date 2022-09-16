@@ -1,14 +1,12 @@
 package com.simplilearn.project.onlinebankapp.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Transfer {
     private String sourceAccount;
     private String destinationAccount;
