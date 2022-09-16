@@ -72,14 +72,17 @@ public class User implements Serializable, UserDetails {
     @Column(name = "ENABLED")
     private boolean enabled = true;
 
+    @Builder.Default
     @JsonManagedReference
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.EAGER)
     private List<UserRole> userRoles = new ArrayList<>();
 
+    @Builder.Default
     @JsonManagedReference
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Account> accounts = new ArrayList<>();
 
+    @Builder.Default
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Transaction> transactions = new ArrayList<>();

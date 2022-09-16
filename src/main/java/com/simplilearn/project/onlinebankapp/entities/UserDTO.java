@@ -42,7 +42,9 @@ public class UserDTO {
 
     private String password;
 
+    @Builder.Default
     private List<AccountDTOAPI> accounts = new ArrayList<>();
+    @Builder.Default
     private List<Transaction> transactions = new ArrayList<>();
 
 }
